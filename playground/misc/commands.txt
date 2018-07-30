@@ -1,0 +1,39 @@
+setg: setg HOST www.example.com
+
+
+exploit 
+	search: exploit search --affected-version '5.9*' confluence*
+	list: exploit list --type csrf
+	add: exploit add csrf/confluence_
+	remove: exploit remove cswsh/jira*
+	edit: exploit edit xss_get/nagios_3_corewindow@https://mon.example.com:8443
+
+
+(exploit|payload conf)
+	info
+	options
+	set: set PROTO https
+	save
+	cancel
+
+
+payload 
+	search: payload search beef
+	list: payload list
+	add: payload add sleepy-puppy
+	remove: payload remove *
+	edit: payload edit beef
+
+
+crusade
+	info
+	list
+	load: crusade load acme_ab
+	save
+	render: crusade render --template misc/base.html.j2 result.html
+
+conf
+
+debug
+	on
+	off

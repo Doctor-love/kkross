@@ -1,0 +1,26 @@
+instance = Kkross(conf='misc/.kkrossrc')
+crusade = instance.crusades.load('supertest_2004')
+print(crusade.name)
+exploits = instance.exploits.list()
+nagios_exploits = instance.exploits.search(name='Nagios*')
+exploit = instance.exploits.get('csrf_get/foobar_app-add_user')
+print(exploit.metadata.name + ' : ' + exploit.metadata.description)
+print(str(exploit.options))
+exploit.configure(HOST='site.example.com', EMAIL='attacker@example.com')
+crusade.exploits.add(exploit)
+templates = instance.templates.list()
+template = instance.templates.get('default')
+template.configure(REFERRER_POLICY='none')
+crusade.template.set(template)
+result = crusade.render()
+crusade.save()
+
+
+instance.crusades.available
+crusade = instance.crusades.load('supertest_2004')
+crusade.save()
+crusade.save('supertest_2005')
+
+
+
+crusade.exploit.add(my_exploit)

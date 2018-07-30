@@ -1,0 +1,13 @@
+
+....
+payloads: 
+
+
+exploits:
+  - name: 'csrf_get/foobar_app-add_user'
+    id: 'https://site.example.com:443'
+    options:
+      PROTO: 'https'
+      HOST: 'site.example.com'
+      PORT: 443
+      EMAIL: 'attacker@example.com'
