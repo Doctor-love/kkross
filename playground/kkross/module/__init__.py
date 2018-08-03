@@ -2,7 +2,7 @@ import logging
 
 from kkross.module.parsers import parse_structure
 from kkross.module.metadata import Metadata
-from kkross.module.options import Options
+from kkross.module.options_parser import options_parser
 
 log = logging.getLogger('kkross;module')
 
@@ -18,4 +18,4 @@ class Module(object):
             parse_structure(self.__module_structure))
 
         self.metadata = Metadata(self.metadata_raw)
-        self.options = Options(self.type, self.metadata_raw)
+        self.options = options_parser(self.options_raw)

@@ -1,6 +1,6 @@
 import logging
 
-from kkross.exceptions import *
+from kkross.exceptions import OptionsError
 
 log = logging.getLogger('kkross;module')
 
@@ -42,4 +42,4 @@ def parse_structure(module_structure):
     if not type(data['template']) is str:
         raise ModuleError('Module data is invalid - "template" property must be a string')
 
-    return structure_version, data['metadata'], data['options'], data['template']
+    return structure_version, data['type'], data['metadata'], data['options'], data['template']

@@ -12,9 +12,17 @@ class ModuleError(KkrossError):
     '''Issues related to modules'''
 
 
+class LoaderError(ModuleError):
+    '''Issues related to loading of modules'''
+
+
 class MetadataError(ModuleError):
     '''Issues related to handling of module metadata'''
 
 
-class OptionError(ModuleError):
+class OptionsError(ModuleError):
     '''Issues related to handling of module options'''
+
+
+class OptionError(ModuleError):
+    '''Issues related to handling of module option'''

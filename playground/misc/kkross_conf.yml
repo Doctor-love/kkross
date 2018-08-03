@@ -1,4 +1,5 @@
 template_dirs: []
 payload_dirs: []
-exploit_dirs: []
+exploit_dirs:
+  - exploit
 crusades_dir: ''
