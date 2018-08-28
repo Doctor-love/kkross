@@ -3,11 +3,14 @@
 
 
 ## Introduction
-kkross enables it's users to exploit various types of known Cross-Site vulnerabilities, such as XSS, CSRF, CSWSH and similar, without prior knowledge of the specific vulnerabilities. 
+kkross enables it's users to exploit various types of known Cross-Site vulnerabilities,
+such as XSS, CSRF, CSWSH and similar, without prior knowledge of the specific vulnerabilities. 
 
-It is similar to the Metasploit framework, except that it does not get involved payload generation or post-exploitation activities.
+It is similar to the Metasploit framework,
+except that it does not get involved payload generation or post-exploitation activities.
 
-Exploit modules, which describes how vulnerabilities can be exploited and user controllable options, are defined in a straight forward YAML structure.
+Exploit modules, which describes how vulnerabilities can be exploited and user controllable options,
+are defined in a straight forward YAML structure.
 
 kkross can currently be used as a Python 3 module or a interactive CLI.  
 
