@@ -16,13 +16,13 @@ class LoaderError(ModuleError):
     '''Issues related to loading of modules'''
 
 
-class MetadataError(ModuleError):
-    '''Issues related to handling of module metadata'''
-
-
 class OptionsError(ModuleError):
     '''Issues related to handling of module options'''
 
 
 class OptionError(ModuleError):
     '''Issues related to handling of module option'''
+
+
+class ConstraintError(OptionError):
+    '''Issues related to handling of module option constraints'''

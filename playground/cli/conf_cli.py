@@ -1,34 +1,32 @@
 import cmd2
-
-import conf_parser
 from ext.tabulate import tabulate
 
-from collections import namedtuple
-Option = namedtuple('Option', 'name description value')
-options = []
 
-for option in ['HOST', 'PROTO', 'QUEL']:
-    options.append(Option(name=option, description='Blalalblalba blalai ' + option, value='bla'))
-
-# ------------------------------------------------------------------------------------------------
-def generate_summary(metadata, options):
-    '''Generate a nice summary table of module information'''
-
-    return tabulate([['PROTO', 'Protcol scheme', 'https'], ['HOST', 'Host name or IP address', '']], headers=['Name', 'Description', 'Current value'], tablefmt='grid')
-
-
-# ------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
 class ConfCli(cmd2.Cmd):
     '''kkross interactive command line interface for exploit/payload configuration'''
 
-    def __init__(self, module):
+    def generate_summary(self):
+        '''Generate a nice summary table of module metadata and options'''
+
+        return tabulate([['PROTO', 'Protcol scheme', 'https'], ['HOST', 'Host name or IP address', '']], headers=['Name', 'Description', 'Current value'], tablefmt='grid')
+
+        summary = (
+            '%s/%s\n\n' % (self.module.type, self.module.name) + metadata_table + options_table)
+
+        return summary
+
+    # ---------------------------------------------------------------------------------------------
+    def __init__(self, crusade_name, module):
         super().__init__()
 
-        #self.module = module
-        #self.intro = generate_summary(module.metadata, module.options)
-        self.intro = generate_summary('foo', 'bar')
+        self.crusade_name = crusade_name
+        self.module = module
+        self.prompt = self.colorize(
+            '%s: %s/%s: ' % (self.crusade_name, self.module.type, self.module.name), 'orange')
+
+        self.summary = self.generate_summary()
         #self.prompt = self.colorize(module.metadata.name + ': ', 'yellow')
-        self.prompt = self.colorize('xss_get/nagios_3-corewindow_uri: ', 'yellow')
 
     #@cmd2.with_argparser(conf_parser.set_parser(self.module.options))
     @cmd2.with_argparser(conf_parser.set_parser(options))

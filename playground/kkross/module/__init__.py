@@ -1,8 +1,7 @@
 import logging
 
-from kkross.module.parsers import parse_structure
-from kkross.module.metadata import Metadata
-from kkross.module.options_parser import options_parser
+from kkross.module.parse_structure import parse_structure
+from kkross.module.parse_options import parse_options
 
 log = logging.getLogger('kkross;module')
 
@@ -13,9 +12,12 @@ class Module(object):
     # ---------------------------------------------------------------------------------------------
     def __init__(self, module_structure):
         self.__module_structure = module_structure
-        
-        self.structure_version, self.type, self.metadata_raw, self.options_raw, self.template = (
-            parse_structure(self.__module_structure))
 
-        self.metadata = Metadata(self.metadata_raw)
-        self.options = options_parser(self.options_raw)
+        module_attributes = (
+            'structure_version', 'module_type', 'name', 'description', 'metadata',
+            '__options_raw', 'template', 'instance_id')
+
+        for key, value in zip(module_attributes, parse_structure(self.__module_structure)):
+            setattr(self, key, value)
+
+        self.options = parse_options(self.__options_raw)
