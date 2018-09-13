@@ -1,0 +1,24 @@
+---
+# kkross crusade definition
+#
+structure_version: 0
+data:
+  name: 'hacka_universum'
+
+  modules:
+    templates:
+      - name: 'html/base_1'
+        options:
+          REFER: true
+          DEBUG: true
+
+    payloads: []
+    exploits:
+      - name: 'xss_get/nagios-corewindow'
+        options:
+          PROTO: 'https'
+          HOST: 'mon.int.example.com'
+          PORT: '443'
+          NAGIOS_PATH: '/n'
+          PAYLOAD: 'alert(":D");'
+

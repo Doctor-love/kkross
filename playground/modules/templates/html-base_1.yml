@@ -1,0 +1,58 @@
+---
+# ** kkross module definition **
+# Used for defining exploits, payloads, templates, etc
+
+# Version of module structure, in order to enable future changes and compatibility determination
+structure_version: 0
+data:
+  module_type: html
+  name: base_1
+  description: 'HTML template that supports "csrf_get" and "xss_get" exploits'
+
+  metadata:
+    # Arbitrary metadata for module (could be presented in interface/be searchable)
+    template_version: 1
+    developers:
+      - Beta Provberg <beta@example.com>
+
+  # Settings that needs to be configured before module is added to crusade
+  # Certain options may be inherited from type - such as "HOST", "PROTO" and "PORT"
+  options:
+    - name: REFER
+      description: 'Include a meta tag that removes "referer" headers from requests'
+      option_type: boolean
+      default: false
+      required: false
+
+      # Specifies different types of limitations for the module option
+      constraints: []
+
+    - name: DEBUG
+      description: 'Include debugging data in rendered template'
+      option_type: boolean
+      default: false
+      required: false
+
+      # Specifies different types of limitations for the module option
+      constraints: []
+
+  # Template for module redering (based on Jinja2)
+  template: "\
+    <html>\n
+    {% if REFER %}<meta name=\"referrer\" content=\"no-referrer\">{% endif %}\n
+    <body>\n
+    {% for exploit in exploits %}\n
+    {% if exploit.module_type == 'csrf_get' or exploit.module_type == 'xss_get' %}
+    <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->\n
+    {% if DEBUG %}
+    <!-- {{ exploit.module_type }}/{{ exploit.name }}: {{ exploit.instance_id }} -->\n
+    {% endif %}
+    <iframe src=\"{{ exploit.data }}\"></iframe>
+    {% endif %}\n
+    {% endfor %}\n
+    </body>\n
+    </html>\n\n"
+  
+  # Template for generating instance ID of module (based on Jinja2)
+  # Defines the unique name of configured module in instance, in order to allow multiple use
+  instance_id: 'Referrer policy enabled: {{ REFER }}'
