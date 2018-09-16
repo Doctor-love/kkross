@@ -12,6 +12,10 @@ class ModuleError(KkrossError):
     '''Issues related to modules'''
 
 
+class CampaignError(KkrossError):
+    '''Issues related to campaigns'''
+
+
 class LoaderError(ModuleError):
     '''Issues related to loading of modules'''
 

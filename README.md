@@ -1,6 +1,8 @@
 # kkross
 #### Cross-site attack tool for redteams (and skiddies)
 
+**WORK IN PROGRESS**
+
 
 ## Introduction
 kkross enables it's users to exploit various types of known Cross-Site vulnerabilities,
@@ -10,7 +12,7 @@ It is similar to the Metasploit framework,
 except that it does not get involved payload generation or post-exploitation activities.
 
 Exploit modules, which describes how vulnerabilities can be exploited and user controllable options,
-are defined in a straight forward YAML structure.
+are defined in a [straight forward YAML structure independent of kkross](https://github.com/doctor-love/xs_exploits).
 
 kkross can currently be used as a Python 3 module or a interactive CLI.  
 

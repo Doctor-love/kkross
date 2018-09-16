@@ -1,6 +1,8 @@
-from .module_loader import module_loader
-
 import logging
+from copy import deepcopy
+
+from kkross.exceptions import ModuleError
+from .module_loader import module_loader
 
 log = logging.getLogger('kkross;modules')
 
@@ -8,65 +10,36 @@ log = logging.getLogger('kkross;modules')
 class Modules(object):
     '''Loads modules (exploits, payloads, templates) and returns the common module interface'''
 
-    def __init__(self, module_dirs):
-        self.__module_dirs = module_dirs
-        self.__modules = module_loader(self.__module_dirs)
-
     # ---------------------------------------------------------------------------------------------
-    def extract_metadata(self):
+    def __extract_metadata(self):
         log.debug('Generating list of module metadata')
 
         results = []
 
         for module in self.__modules:
-            results.append(module.metadata)
+            log.debug('Extracting metadata for module "%s/%s"' % (module.module_type, module.name))
+
+            basic_data = {
+                'module_type': module.module_type, 'name': module.name,
+                'description': module.description}
+
+            results.append(dict(module.metadata, **basic_data))
 
         return results
 
     # ---------------------------------------------------------------------------------------------
-    def search(self, query='*', **kwargs):
-        log.debug('Generating list of modules ')
+    def __init__(self, module_dirs):
+        self.__module_dirs = module_dirs
+        self.__modules = module_loader(self.__module_dirs)
+        self.metadata = self.__extract_metadata()
 
-        search_filters = kwargs
-        modules = self.extract_metadata()
+    # ---------------------------------------------------------------------------------------------
+    def get(self, module_id):
+        log.debug('Reteriving module ID "%s" from instance' % module_id)
 
-        if query == '*' and not search_filters:
-            return modules
+        for module in self.__modules:
+            if module.module_type + '/' + module.name == module_id:
+                return deepcopy(module)
 
-        # -----------------------------------------------------------------------------------------
-        results = []
+        raise ModuleError('Could not find module ID "%s" in instance' % module_id)
 
-        for module in modules:
-            attributes = dir(module)
-            matches = []
-
-            for key, value in search_filters.items():
-                if key in attributes and value in getattr(module, key):
-                    matches.append(key)
-
-            if len(search_filters) == len(matches):
-                if query == '*':
-                    results.append(module)
-                    continue
-            else:
-                continue
-
-            # -------------------------------------------------------------------------------------
-            for match in matches:
-                if match in attributes:
-                    attributes.pop(match)
-
-            for key in attributes:
-                if key.startswith('__'):
-                    continue
-
-                value = getattr(module, key)
-
-                if query in value:
-                    results.append(module)
-                    break
-
-        # -----------------------------------------------------------------------------------------
-        log.debug('Found %i modules matching search filter and query' % len(results))
-
-        return results

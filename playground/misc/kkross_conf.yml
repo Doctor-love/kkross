@@ -1,5 +1,4 @@
-template_dirs: []
+template_dirs: ['modules/templates']
 payload_dirs: []
-exploit_dirs:
-  - exploit
-crusades_dir: ''
+exploit_dirs: ['modules/exploits']
+campaign_dirs: ['modules/campaigns']

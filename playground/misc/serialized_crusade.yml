@@ -1,13 +1,29 @@
+---
+# kkross crusade definition
+#
+structure_version: 0
+data:
+  name: 'test_crusade-1'
 
-....
-payloads: 
+  modules:
+    templates:
+      - name: 'html/base_1'
+        options:
+          REFER: false
 
+    payloads: []
 
-exploits:
-  - name: 'csrf_get/foobar_app-add_user'
-    id: 'https://site.example.com:443'
-    options:
-      PROTO: 'https'
-      HOST: 'site.example.com'
-      PORT: 443
-      EMAIL: 'attacker@example.com'
+    exploits:
+      - name: 'csrf_get/foobar_app-add_user'
+        options:
+          PROTO: 'https'
+          HOST: 'site.example.com'
+          PORT: '443'
+          EMAIL: 'attacker@example.com'
+
+      - name: 'csrf_get/barfoo_app-add_user'
+        options:
+          PROTO: 'https'
+          HOST: 'site.example.org'
+          PORT: '443'
+          EMAIL: 'attacker@example.com'

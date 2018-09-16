@@ -1,16 +1,11 @@
 import argparse
 
 # ------------------------------------------------------------------------------------------------
-def set_parser(options):
-    option_names = []
-
-    for option in options:
-        option_names.append(option.name)
-
+def set_parser():
     parser = argparse.ArgumentParser(prog='set')
 
     parser.add_argument(
-        'option', type=str, choices=option_names, help='Name of option to configure')
+        'name', type=str, help='Name of option to configure')
 
     parser.add_argument(
         'value', type=str, help='Value of option to configure')

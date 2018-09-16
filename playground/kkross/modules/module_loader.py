@@ -2,7 +2,7 @@ from kkross.exceptions import ModuleError, LoaderError
 from kkross.module import Module
 
 from glob import glob
-import yaml
+from yaml import safe_load
 import os
 
 def module_loader(module_dirs):
@@ -14,13 +14,13 @@ def module_loader(module_dirs):
         module_paths.extend(glob(os.path.join(module_dir, '*.y*ml')))
 
     if not module_paths:
-        raise LoaderError('Could not find any module files in %s' % ', '.join(module_dirs))
+        return []
 
     modules = []
 
     for module_path in module_paths:
         try:
-            module_raw = yaml.load(open(module_path, 'r'))
+            module_raw = safe_load(open(module_path, 'r'))
 
         except Exception as error_msg:
             raise LoaderError(
